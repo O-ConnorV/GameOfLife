@@ -1,21 +1,21 @@
-/**
- * Simple implementation of John Conway's Game of Life.
- * Starts with random seed and plays out on bounded grid
- * (without wrap-around).
+/*
+  Simple implementation of John Conway's Game of Life.
+  Starts with random seed and plays out on bounded grid
+  (without wrap-around).
 
- *  User interactions:
- *    ENTER to evolve
- *    'A' to add a live cell
- *    'N' to display neighbor counts for each cell
- *    'Q' to end game
+   User interactions:
+     ENTER to evolve
+     'A' to add a live cell
+     'N' to display neighbor counts for each cell
+     'Q' to end game
 
- *  TO DO:
- *        - Display the number of live cells and the number of evolutions.
- *        - Add presets to choose from at the beginning (ex: a simple glider, a gun,...)
- *        instead of choosing a size and a density.
+   TO DO:
+         - Display the number of live cells and the number of evolutions.
+         - Add presets to choose from at the beginning (ex: a simple glider, a gun,...)
+         instead of choosing a size and a density.
  */
 
-
+package GameOfLife.GameOfLife.src;
 import java.util.Scanner;
 
 public class GameOfLife
