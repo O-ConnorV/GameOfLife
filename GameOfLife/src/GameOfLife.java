@@ -11,6 +11,8 @@
 
  *  TO DO:
  *        - Display the number of live cells and the number of evolutions.
+ *        - Add presets to choose from at the beginning (ex: a simple glider, a gun,...)
+ *        instead of choosing a size and a density.
  */
 
 
@@ -31,18 +33,66 @@ public class GameOfLife
     String command;
 
     // world setup
-    System.out.print("Choose array size:\nwidth: ");
-    final int GRID_WIDTH = input.nextInt();
-    System.out.print("height: ");
-    final int GRID_HEIGHT = input.nextInt();
-
-    System.out.print("Choose the density: ");
-    final double SEED_DENSITY = input.nextDouble();
-
-    boolean[][] cells = randomSeed(GRID_HEIGHT, GRID_WIDTH, SEED_DENSITY);
-
+    boolean[][] cells = new boolean[4][2]; // init of the cells array
     boolean keepGoing = true;
-    do
+
+    System.out.print("Press 1 if you want to start with a preset " +
+            "and 2 if you want a random seed: ");
+    int keyPressed = input.nextInt();
+
+    if (keyPressed == 2) // random seed mode
+    {
+      System.out.print("Choose array size:\nwidth: ");
+      final int GRID_WIDTH = input.nextInt();
+      System.out.print("height: ");
+      final int GRID_HEIGHT = input.nextInt();
+
+      System.out.print("Choose the density: ");
+      final double SEED_DENSITY = input.nextDouble();
+
+      cells = randomSeed(GRID_HEIGHT, GRID_WIDTH, SEED_DENSITY);
+    }
+    else if (keyPressed == 1) // preset mode
+    {
+      System.out.print("Choose a preset:\n" +
+              "   - Enter 1 if you want an empty grid\n" +
+              "   - Enter 2 if you want to start with a simple glider\n" +
+              "   - Enter 3 if you want to start with a simple gun\n");
+
+      int choice = input.nextInt();
+
+      if (choice == 1) // empty
+        cells = new boolean[50][50];
+
+      else if (choice == 2) // glider
+      {
+        cells = new boolean[50][50];
+
+        cells[25][25] = true;
+        cells[26][26] = true;
+        cells[27][26] = true;
+        cells[27][25] = true;
+        cells[27][24] = true;
+      }
+      else if (choice == 3) // gun
+      {
+        //TODO: gun
+        cells = new boolean[50][50];
+      }
+      else
+      {
+        System.out.print("Not a valid choice! Try again...");
+        keepGoing = false;
+      }
+    }
+    else
+    {
+      System.out.print("Not a valid answer! Try again...");
+      keepGoing = false;
+    }
+
+    // main loop that keeps the game running
+    while(keepGoing)
     {
       displayGrid(cells);
       command = input.nextLine().trim().toUpperCase();
@@ -63,7 +113,7 @@ public class GameOfLife
         displayNeighborCounts(cells);
       else
         cells = evolve(cells);
-    } while(keepGoing);
+    }
   }
 
   /*
@@ -85,16 +135,16 @@ public class GameOfLife
         if(cells[row][col] && numNeighbors < 2)
           nextGen[row][col] = false;
 
-        // 2. Any live cell with two or three live neighbours lives
-        //   on to the next generation.
+          // 2. Any live cell with two or three live neighbours lives
+          //   on to the next generation.
         else if(cells[row][col] && (numNeighbors == 2 || numNeighbors == 3))
           nextGen[row][col] = true;
 
-        // 3. Any live cell with more than three live neighbours dies.
+          // 3. Any live cell with more than three live neighbours dies.
         else if(cells[row][col] && numNeighbors > 3)
           cells[row][col] = false;
 
-        // 4. Any dead cell with exactly three live neighbours becomes alive.
+          // 4. Any dead cell with exactly three live neighbours becomes alive.
         else if(!cells[row][col] && numNeighbors == 3)
           cells[row][col] = true;
       }
