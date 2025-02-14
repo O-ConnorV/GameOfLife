@@ -68,22 +68,22 @@ public class GameOfLife
         System.out.print("height: ");
         final int GRID_HEIGHT = input.nextInt();
 
-        cells = new boolean[GRID_HEIGHT][GRID_WIDTH];
+        cells = new boolean[GRID_WIDTH][GRID_HEIGHT];
       }
       else if (choice == 2) // glider
       {
-        cells = new boolean[75][30];
+        cells = new boolean[30][75];
 
-        cells[25][25] = true;
-        cells[26][26] = true;
-        cells[27][26] = true;
-        cells[27][25] = true;
-        cells[27][24] = true;
+        cells[15][35] = true;
+        cells[16][36] = true;
+        cells[17][36] = true;
+        cells[17][35] = true;
+        cells[17][34] = true;
       }
       else if (choice == 3) // gun
       {
         //TODO: gun
-        cells = new boolean[75][30];
+        cells = new boolean[30][75];
       }
       else
       {
@@ -193,8 +193,8 @@ public class GameOfLife
         if(i == 0 && j == 0)
           continue;
 
-        int I = (row + i + height) % height;
-        int J = (col + j + width) % width;
+        int I = (((row - 1) + i + height) % height) + 1;
+        int J = (((col - 1) + j + width) % width) + 1;
 
         if (grid[I][J])
           count++;
