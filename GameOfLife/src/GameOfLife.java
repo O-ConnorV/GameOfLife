@@ -62,8 +62,14 @@ public class GameOfLife
       int choice = input.nextInt();
 
       if (choice == 1) // empty
-        cells = new boolean[50][50];
+      {
+        System.out.print("Choose array size:\nwidth: ");
+        final int GRID_WIDTH = input.nextInt();
+        System.out.print("height: ");
+        final int GRID_HEIGHT = input.nextInt();
 
+        cells = new boolean[GRID_HEIGHT][GRID_WIDTH];
+      }
       else if (choice == 2) // glider
       {
         cells = new boolean[50][50];
@@ -131,22 +137,23 @@ public class GameOfLife
       {
         int numNeighbors = countNeighbors(cells, row, col);
 
-        // 1. Any live cell with fewer than two live neighbours dies.
-        if(cells[row][col] && numNeighbors < 2)
-          nextGen[row][col] = false;
-
-          // 2. Any live cell with two or three live neighbours lives
-          //   on to the next generation.
-        else if(cells[row][col] && (numNeighbors == 2 || numNeighbors == 3))
+        // Any dead cell with exactly three live neighbours becomes alive.
+        if(!cells[row][col] && numNeighbors == 3)
           nextGen[row][col] = true;
 
-          // 3. Any live cell with more than three live neighbours dies.
-        else if(cells[row][col] && numNeighbors > 3)
-          cells[row][col] = false;
+        // Any live cell with fewer than two live neighbours dies.
+        else if(cells[row][col] && numNeighbors < 2)
+          nextGen[row][col] = false;
 
-          // 4. Any dead cell with exactly three live neighbours becomes alive.
-        else if(!cells[row][col] && numNeighbors == 3)
-          cells[row][col] = true;
+          // Any live cell with two or three live neighbours lives
+          // on to the next generation.
+        else if(cells[row][col] && (numNeighbors == 2 || numNeighbors == 3))
+
+          nextGen[row][col] = true;
+
+          // Any live cell with more than three live neighbours dies.
+        else if(cells[row][col] && numNeighbors > 3)
+          nextGen[row][col] = false;
       }
     }
     return nextGen;
