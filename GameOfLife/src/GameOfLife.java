@@ -72,7 +72,7 @@ public class GameOfLife
       }
       else if (choice == 2) // glider
       {
-        cells = new boolean[50][50];
+        cells = new boolean[75][30];
 
         cells[25][25] = true;
         cells[26][26] = true;
@@ -83,7 +83,7 @@ public class GameOfLife
       else if (choice == 3) // gun
       {
         //TODO: gun
-        cells = new boolean[50][50];
+        cells = new boolean[75][30];
       }
       else
       {
